@@ -8,22 +8,24 @@ function Signup() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-
-
-    const handleSubmit = (e)=> {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const user = { name, email, password };
-        axios.post('http://localhost:5000/api/signup', user)
-            .then(response => {
-                console.log(response.data);
-                navigate('/login'); // Redirect to login page after successful signup
-            })
-            .catch(error => {
-                console.error('There was an error signing up!', error);
-            });
+        axios.post('http://localhost:3000/auth/signup', user, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            console.log(response.data);
+            navigate('/login');
+        })
+        .catch(error => {
+            console.error('There was an error signing up!', error);
+        });
     };
 
-    return(
+    return (
         <div>
             <h2>Signup</h2>
             <form onSubmit={handleSubmit}>
@@ -31,12 +33,9 @@ function Signup() {
                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <button type="submit">Signup</button>
-
             </form>
         </div>
-    )
+    );
 }
 
-
 export default Signup;
-

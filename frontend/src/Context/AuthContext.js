@@ -10,7 +10,20 @@ export const AuthProvider = ({ children }) => {
     if (storedToken) {
       setToken(storedToken);
     }
-  }, []);
+
+    const handleStorageChange = () => {
+      const newToken = localStorage.getItem('token');
+      if (newToken !== token) {
+        setToken(newToken);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [token]); // Agrega token como dependencia
 
   const updateToken = (newToken) => {
     setToken(newToken);

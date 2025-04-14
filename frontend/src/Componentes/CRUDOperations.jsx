@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../Context/AuthContext';
+import './CRUDOperations.css';
 
 function CRUDOperations() {
     const { token } = useContext(AuthContext);
@@ -106,10 +107,10 @@ function CRUDOperations() {
   };
 
   return (
-    <div>
+    <div className='Conteiner-principal'>
       <h2>Products</h2>
 
-      {/* Formulario de Creación */}
+      
       <h3>Create New Product</h3>
       <input
         type="text"
@@ -135,21 +136,25 @@ function CRUDOperations() {
         value={newProductQuantity}
         onChange={(e) => setNewProductQuantity(e.target.value)}
       />
-      <button onClick={createProduct}>Create Product</button>
+      <button  onClick={createProduct}>Create Product</button>
 
     
-      <h3>Product List</h3>
-      <ul>
-        {products.map((product) => (
-          <li key={product._id}>
-            {product.name} - ${product.price} (Quantity: {product.quantity})
-            <button onClick={() => handleEdit(product)}>Edit</button>
-            <button onClick={() => deleteProduct(product._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <div className='products-container'>
+        <h3>Product List</h3>
+        <div className='BottonsList'>
+            <ul>
+                {products.map((product) => (
+                <li key={product._id}>
+                    {product.name} - ${product.price} (Quantity: {product.quantity})
+                    <button className='Edit' onClick={() => handleEdit(product)}>Edit</button>
+                    <button className='Delete' onClick={() => deleteProduct(product._id)}>Delete</button>
+                </li>
+                ))}
+            </ul>
+        </div>
+      </div>
 
-      {/* Formulario de Edición */}
+      
       {editingProduct && (
         <div>
           <h3>Edit Product</h3>

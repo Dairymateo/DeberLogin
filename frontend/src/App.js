@@ -1,23 +1,54 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './Componentes/Header';
-import Signup from './Componentes/Signup';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Products from './Componentes/Products';
 import Login from './Componentes/Login';
-import Products from './Componentes/Products'; // Importa Products
+import Signup from './Componentes/Signup';
 import { AuthContext } from './Context/AuthContext';
+import './App.css';
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+
+  useEffect(() => {
+    localStorage.setItem('token', token || '');
+    setIsLoggedIn(!!token);
+  }, [token]);
+
+  const updateToken = (newToken) => {
+    setToken(newToken);
+  };
+
+  const logout = () => {
+    setToken(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ token: null, updateToken: () => {}, clearToken: () => {} }}>
+    <AuthContext.Provider value={{ token, updateToken }}>
       <Router>
-        <Header className="app-header" />
-        <div className="app-content">
+        <header className="app-header">
+          <h1>Login con React y NestJS</h1>
+          <nav>
+            <ul>
+              {!isLoggedIn && (
+                <>
+                  <li><Link to="/login">Login</Link></li>
+                  <li><Link to="/signup">Signup</Link></li>
+                </>
+              )}
+              {isLoggedIn && (
+                <li><button onClick={logout}>Logout</button></li>
+              )}
+            </ul>
+          </nav>
+        </header>
+        <main className="app-main">
           <Routes>
-            <Route path="/" element={<Products className="products-list" />} /> {/* Products en la ruta raíz */}
-            <Route path="/signup" element={<Signup className="signup-form" />} />
-            <Route path="/login" element={<Login className="login-form" />} />
+            <Route path="/" element={<Products isLoggedIn={isLoggedIn} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
-        </div>
+        </main>
       </Router>
     </AuthContext.Provider>
   );

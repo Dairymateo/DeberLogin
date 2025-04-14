@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import Products from './Componentes/Products';
 import Login from './Componentes/Login';
 import Signup from './Componentes/Signup';
@@ -9,6 +9,7 @@ import './App.css';
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+  const location = useLocation();
 
   useEffect(() => {
     localStorage.setItem('token', token || '');
@@ -23,9 +24,11 @@ function App() {
     setToken(null);
   };
 
+  const showHeader = location.pathname !== '/login' && location.pathname !== '/signup';
+
   return (
     <AuthContext.Provider value={{ token, updateToken }}>
-      <Router>
+      {showHeader && (
         <header className="app-header">
           <h1>Login con React y NestJS</h1>
           <nav>
@@ -42,14 +45,14 @@ function App() {
             </ul>
           </nav>
         </header>
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<Products isLoggedIn={isLoggedIn} />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-        </main>
-      </Router>
+      )}
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<Products isLoggedIn={isLoggedIn} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </main>
     </AuthContext.Provider>
   );
 }

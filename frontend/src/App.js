@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import Products from './Componentes/Products';
 import Login from './Componentes/Login';
 import Signup from './Componentes/Signup';
+import CRUDOperations from './Componentes/CRUDOperations'; // Importa el componente CRUDOperations
 import { AuthContext } from './Context/AuthContext';
 import './App.css';
 
@@ -28,31 +29,35 @@ function App() {
 
   return (
     <AuthContext.Provider value={{ token, updateToken }}>
-      {showHeader && (
-        <header className="app-header">
-          <h1>Login con React y NestJS</h1>
-          <nav>
-            <ul>
-              {!isLoggedIn && (
-                <>
-                  <li><Link to="/login">Login</Link></li>
-                  <li><Link to="/signup">Signup</Link></li>
-                </>
-              )}
-              {isLoggedIn && (
-                <li><button onClick={logout}>Logout</button></li>
-              )}
-            </ul>
-          </nav>
-        </header>
-      )}
-      <main className="app-main">
-        <Routes>
-          <Route path="/" element={<Products isLoggedIn={isLoggedIn} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </main>
+        {showHeader && (
+          <header className="app-header">
+            <h1>Login con React y NestJS</h1>
+            <nav>
+              <ul>
+                {!isLoggedIn && (
+                  <>
+                    <li><Link to="/login">Login</Link></li>
+                    <li><Link to="/signup">Signup</Link></li>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <>
+                    <li><Link to="/crud">CRUD</Link></li> {/* Añade el enlace a CRUD */}
+                    <li><button onClick={logout}>Logout</button></li>
+                  </>
+                )}
+              </ul>
+            </nav>
+          </header>
+        )}
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<Products isLoggedIn={isLoggedIn} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/crud" element={isLoggedIn ? <CRUDOperations /> : <Navigate to="/login" />} />
+          </Routes>
+        </main>
     </AuthContext.Provider>
   );
 }

@@ -59,7 +59,7 @@ function Login() {
         <button type='submit'>Login</button>
 
         <div className='register-link'>
-          <p>Don't have an account? <a href='#'>Register</a></p>
+          <p>Don't have an account? <a href='http://localhost:3001/signup'>Register</a></p>
         </div>
       </form>
     </div>

@@ -1,62 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
 body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: url('./Componentes/Assets/1112.jpg') no-repeat;
-  background-size: cover;
-  background-position: center;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: url('./Componentes/Assets/1112.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .app-header {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 20px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+
+    background-color: rgba(0, 0, 0, 0.8); 
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
 }
 
 .app-header h1 {
-  font-size: 36px;
-  margin: 0;
+    font-size: 36px;
+    margin: 0;
+    
 }
 
 .app-header nav ul {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 .app-header nav ul li {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 
 .app-header nav ul li a,
 .app-header nav ul li button {
-  color: white;
-  text-decoration: none;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+    color: white;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: opacity 0.3s ease; 
+}
+
+.app-header nav ul li a:hover,
+.app-header nav ul li button:hover {
+    opacity: 0.8; 
 }
 
 .app-main {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 20px auto;
-  flex-grow: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    flex-grow: 1;
 }

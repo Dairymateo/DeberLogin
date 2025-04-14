@@ -1,12 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    justify-content: center; 
-    align-items: center;
-}
+
 
 
 body {
@@ -14,8 +8,8 @@ body {
     font-family: 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    align-items: center;
+
+
     min-height: 100vh;
     background: url('./Componentes/Assets/1112.jpg') no-repeat;
     background-size: cover;

@@ -1,98 +1,172 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Proyecto - CRUD de Productos con Autenticación JWT
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este proyecto fullstack implementa un sistema CRUD de productos protegido mediante autenticación JWT. Solo los usuarios autenticados pueden crear, actualizar o eliminar productos. Los usuarios no autenticados pueden ver la lista de productos. Además, el sistema permite registrarse y hacer login mediante un sistema de usuarios.
 
-## Description
+## Tecnologías usadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Frontend
+- **React** 19.1.0
+- **React Router DOM**: Navegación entre rutas
+- **Axios**: Solicitudes HTTP
+- **React Testing Library**: Testing
 
-## Project setup
+### Backend
+- **NestJS** 11
+- **MongoDB** + **Mongoose**
+- **JWT**: Autenticación
+- **Bcrypt**: Encriptación de contraseñas
+- **TypeScript**
+- **Jest**: Testing
+- **ESLint + Prettier**: Linter y formateador
+
+## Instalación y ejecución
 
 ```bash
-$ npm install
+# 1. Clonar el repositorio
+https://github.com/Dairymateo/DeberLogin.git
+
+# 2. Instalar dependencias del backend
+cd login
+npm install
+
+# 3. Levantar el backend en modo desarrollo
+npm run start:dev
+
+# 4. Instalar dependencias del frontend
+cd ../frontend
+npm install
+
+# 5. Levantar el frontend
+npm start
 ```
 
-## Compile and run the project
+Asegúrate de tener una instancia de MongoDB activa (local o Atlas). Este proyecto se conecta a una base llamada `Login`, usando las colecciones `Users` y `Products`.
 
-```bash
-# development
-$ npm run start
+## Funcionalidad protegida
 
-# watch mode
-$ npm run start:dev
+- Crear producto (solo autenticado)
+- Actualizar producto (solo autenticado)
+- Eliminar producto (solo autenticado)
+- Ver productos (acceso público)
+- Registrar usuario
+- Iniciar sesión (con JWT)
 
-# production mode
-$ npm run start:prod
+## Estructura del proyecto
+
+### Backend
+```
+backend/
+├── src/
+│   ├── auth/             # Módulo de autenticación (signup/login)
+│   │   ├── dto/
+│   │   ├── schemas/
+│   │   ├── auth.controller.ts
+│   │   ├── auth.guard.ts
+│   │   ├── auth.module.ts
+│   │   └── auth.service.ts
+│   ├── config/
+│   ├── products/         # Módulo de productos
+│   │   ├── dto/
+│   │   ├── schemas/
+│   │   ├── products.controller.ts
+│   │   ├── products.module.ts
+│   │   └── products.service.ts
+│   ├── app.controller.ts
+│   ├── app.module.ts
+│   ├── app.service.ts
+│   └── main.ts
+├── test/
+├── node_modules/
+├── .env
+├── .gitignore
+├── .prettierrc
+├── eslint.config.mjs
+├── nest-cli.json
+├── package-lock.json
+└── package.json
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+### Frontend
+```
+frontend/
+├── src/
+│   ├── Componentes/      # Componentes de UI reutilizables
+│   │   ├── Assets/
+│   │   ├── CRUDOperations.css
+│   │   ├── CRUDOperations.jsx
+│   │   ├── Login.css
+│   │   ├── Login.jsx
+│   │   ├── Products.css
+│   │   ├── Products.jsx
+│   │   └── Signup.jsx
+│   ├── Context/          # Contexto para la gestión de estado (ej., Autenticación)
+│   │   └── AuthContext.js
+│   ├── App.css
+│   ├── App.js
+│   ├── App.test.js
+│   ├── index.css
+│   ├── index.js
+│   ├── logo.svg
+│   ├── reportWebVitals.js
+│   └── setupTests.js
+├── public/
+├── node_modules/
+├── .gitignore
+├── package-lock.json
+└── package.json
 ```
 
-## Deployment
+## Dependencias del frontend (React)
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
+```json
+"dependencies": {
+  "@testing-library/dom": "^10.4.0",
+  "@testing-library/jest-dom": "^6.6.3",
+  "@testing-library/react": "^16.3.0",
+  "@testing-library/user-event": "^13.5.0",
+  "axios": "^1.8.4",
+  "react": "^19.1.0",
+  "react-dom": "^19.1.0",
+  "react-router-dom": "^7.5.0",
+  "react-scripts": "5.0.1",
+  "web-vitals": "^2.1.4"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Dependencias del backend (NestJS)
 
-## Resources
+```json
+"dependencies": {
+  "@nestjs/common": "^11.0.13",
+  "@nestjs/config": "^4.0.2",
+  "@nestjs/core": "^11.0.13",
+  "@nestjs/jwt": "^11.0.0",
+  "@nestjs/mapped-types": "*",
+  "@nestjs/mongoose": "^11.0.3",
+  "@nestjs/platform-express": "^11.0.1",
+  "bcrypt": "^5.1.1",
+  "class-transformer": "^0.5.1",
+  "class-validator": "^0.14.1",
+  "mongoose": "^8.13.2",
+  "reflect-metadata": "^0.2.2",
+  "rxjs": "^7.8.1"
+}
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## Endpoints disponibles
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Users (Autenticación)
+| Método | Ruta        | Descripción         |
+|--------|-------------|---------------------|
+| POST   | /auth/signup| Registro de usuario |
+| POST   | /auth/login | Login y JWT         |
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Products
+| Método | Ruta         | Descripción               |
+|--------|--------------|---------------------------|
+| GET    | /products    | Obtener todos los productos |
+| POST   | /products    | Crear producto (protegido)  |
+| PUT    | /products/:id| Actualizar producto (protegido) |
+| DELETE | /products/:id| Eliminar producto (protegido)   |
+```

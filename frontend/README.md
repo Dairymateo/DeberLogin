@@ -1,70 +1,172 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Proyecto - CRUD de Productos con Autenticación JWT
 
-## Available Scripts
+Este proyecto fullstack implementa un sistema CRUD de productos protegido mediante autenticación JWT. Solo los usuarios autenticados pueden crear, actualizar o eliminar productos. Los usuarios no autenticados pueden ver la lista de productos. Además, el sistema permite registrarse y hacer login mediante un sistema de usuarios.
 
-In the project directory, you can run:
+## Tecnologías usadas
 
-### `npm start`
+### Frontend
+- **React** 19.1.0
+- **React Router DOM**: Navegación entre rutas
+- **Axios**: Solicitudes HTTP
+- **React Testing Library**: Testing
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Backend
+- **NestJS** 11
+- **MongoDB** + **Mongoose**
+- **JWT**: Autenticación
+- **Bcrypt**: Encriptación de contraseñas
+- **TypeScript**
+- **Jest**: Testing
+- **ESLint + Prettier**: Linter y formateador
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Instalación y ejecución
 
-### `npm test`
+```bash
+# 1. Clonar el repositorio
+https://github.com/Dairymateo/DeberLogin.git
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 2. Instalar dependencias del backend
+cd login
+npm install
 
-### `npm run build`
+# 3. Levantar el backend en modo desarrollo
+npm run start:dev
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 4. Instalar dependencias del frontend
+cd ../frontend
+npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 5. Levantar el frontend
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Asegúrate de tener una instancia de MongoDB activa (local o Atlas). Este proyecto se conecta a una base llamada `Login`, usando las colecciones `Users` y `Products`.
 
-### `npm run eject`
+## Funcionalidad protegida
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Crear producto (solo autenticado)
+- Actualizar producto (solo autenticado)
+- Eliminar producto (solo autenticado)
+- Ver productos (acceso público)
+- Registrar usuario
+- Iniciar sesión (con JWT)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Estructura del proyecto
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Backend
+```
+backend/
+├── src/
+│   ├── auth/             # Módulo de autenticación (signup/login)
+│   │   ├── dto/
+│   │   ├── schemas/
+│   │   ├── auth.controller.ts
+│   │   ├── auth.guard.ts
+│   │   ├── auth.module.ts
+│   │   └── auth.service.ts
+│   ├── config/
+│   ├── products/         # Módulo de productos
+│   │   ├── dto/
+│   │   ├── schemas/
+│   │   ├── products.controller.ts
+│   │   ├── products.module.ts
+│   │   └── products.service.ts
+│   ├── app.controller.ts
+│   ├── app.module.ts
+│   ├── app.service.ts
+│   └── main.ts
+├── test/
+├── node_modules/
+├── .env
+├── .gitignore
+├── .prettierrc
+├── eslint.config.mjs
+├── nest-cli.json
+├── package-lock.json
+└── package.json
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Frontend
+```
+frontend/
+├── src/
+│   ├── Componentes/      # Componentes de UI reutilizables
+│   │   ├── Assets/
+│   │   ├── CRUDOperations.css
+│   │   ├── CRUDOperations.jsx
+│   │   ├── Login.css
+│   │   ├── Login.jsx
+│   │   ├── Products.css
+│   │   ├── Products.jsx
+│   │   └── Signup.jsx
+│   ├── Context/          # Contexto para la gestión de estado (ej., Autenticación)
+│   │   └── AuthContext.js
+│   ├── App.css
+│   ├── App.js
+│   ├── App.test.js
+│   ├── index.css
+│   ├── index.js
+│   ├── logo.svg
+│   ├── reportWebVitals.js
+│   └── setupTests.js
+├── public/
+├── node_modules/
+├── .gitignore
+├── package-lock.json
+└── package.json
+```
 
-## Learn More
+## Dependencias del frontend (React)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```json
+"dependencies": {
+  "@testing-library/dom": "^10.4.0",
+  "@testing-library/jest-dom": "^6.6.3",
+  "@testing-library/react": "^16.3.0",
+  "@testing-library/user-event": "^13.5.0",
+  "axios": "^1.8.4",
+  "react": "^19.1.0",
+  "react-dom": "^19.1.0",
+  "react-router-dom": "^7.5.0",
+  "react-scripts": "5.0.1",
+  "web-vitals": "^2.1.4"
+}
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Dependencias del backend (NestJS)
 
-### Code Splitting
+```json
+"dependencies": {
+  "@nestjs/common": "^11.0.13",
+  "@nestjs/config": "^4.0.2",
+  "@nestjs/core": "^11.0.13",
+  "@nestjs/jwt": "^11.0.0",
+  "@nestjs/mapped-types": "*",
+  "@nestjs/mongoose": "^11.0.3",
+  "@nestjs/platform-express": "^11.0.1",
+  "bcrypt": "^5.1.1",
+  "class-transformer": "^0.5.1",
+  "class-validator": "^0.14.1",
+  "mongoose": "^8.13.2",
+  "reflect-metadata": "^0.2.2",
+  "rxjs": "^7.8.1"
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Endpoints disponibles
 
-### Analyzing the Bundle Size
+### Users (Autenticación)
+| Método | Ruta        | Descripción         |
+|--------|-------------|---------------------|
+| POST   | /auth/signup| Registro de usuario |
+| POST   | /auth/login | Login y JWT         |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Products
+| Método | Ruta         | Descripción               |
+|--------|--------------|---------------------------|
+| GET    | /products    | Obtener todos los productos |
+| POST   | /products    | Crear producto (protegido)  |
+| PUT    | /products/:id| Actualizar producto (protegido) |
+| DELETE | /products/:id| Eliminar producto (protegido)   |
+```
